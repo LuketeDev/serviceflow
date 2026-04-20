@@ -6,12 +6,12 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import io.github.lukete.serviceflow.exceptions.ResourceNotFoundException;
 import io.github.lukete.serviceflow.service.domain.entity.ServiceEntity;
 import io.github.lukete.serviceflow.service.dto.CreateServiceRequest;
 import io.github.lukete.serviceflow.service.dto.ServiceResponse;
 import io.github.lukete.serviceflow.service.dto.UpdateServiceRequest;
 import io.github.lukete.serviceflow.service.repository.ServiceRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -44,13 +44,13 @@ public class ServiceService {
 
     public ServiceResponse findById(UUID id) {
         ServiceEntity service = serviceRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(NOT_FOUND + id));
+                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + id));
         return toResponse(service);
     }
 
     public ServiceResponse update(UUID id, UpdateServiceRequest request) {
         ServiceEntity service = serviceRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(NOT_FOUND + id));
+                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + id));
 
         service.setName(request.name());
         service.setDescription(request.description());
@@ -64,7 +64,7 @@ public class ServiceService {
 
     public ServiceResponse deactivate(UUID id) {
         ServiceEntity service = serviceRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(NOT_FOUND + id));
+                .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + id));
 
         service.setActive(false);
         service.setUpdatedAt(LocalDateTime.now());
