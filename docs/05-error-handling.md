@@ -1,5 +1,7 @@
 # ServiceFlow — Error Handling
 
+- 20/04/2026
+
 ## Objetivo
 
 Padronizar as respostas de erro da API para facilitar:

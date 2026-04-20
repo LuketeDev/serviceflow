@@ -1,5 +1,7 @@
 # ServiceFlow - Domínio Inicial
 
+- 20/04/2026
+
 ## Entidades planejadas
 
 - User

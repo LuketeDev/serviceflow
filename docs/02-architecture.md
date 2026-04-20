@@ -1,5 +1,7 @@
 # ServiceFlow - Arquitetura Inicial
 
+- 20/04/2026
+
 ## Estratégia atual
 
 Arquitetura simples por feature, evitando overengineering.
