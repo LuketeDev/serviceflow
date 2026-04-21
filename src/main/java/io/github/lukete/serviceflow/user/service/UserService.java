@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import io.github.lukete.serviceflow.exceptions.DuplicateResourceException;
 import io.github.lukete.serviceflow.exceptions.ResourceNotFoundException;
 import io.github.lukete.serviceflow.user.domain.entity.User;
 import io.github.lukete.serviceflow.user.dto.CreateUserRequest;
@@ -18,10 +19,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserService {
     private static final String NOT_FOUND = "User not found with id: ";
+    private static final String DUPLICATE = "User already exists with the email: ";
     private final UserRepository userRepository;
 
     public UserResponse createUser(CreateUserRequest request) {
-        // TODO add non-duplication
+        if (userRepository.existsByEmail(request.email())) {
+            throw new DuplicateResourceException(DUPLICATE + request.email());
+        }
 
         User user = new User();
         user.setName(request.name());
