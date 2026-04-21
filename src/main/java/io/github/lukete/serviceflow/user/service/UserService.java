@@ -3,6 +3,7 @@ package io.github.lukete.serviceflow.user.service;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import io.github.lukete.serviceflow.exceptions.DuplicateResourceException;
@@ -20,6 +21,7 @@ public class UserService {
     private static final String NOT_FOUND = "User not found with id: ";
     private static final String DUPLICATE = "User already exists with the email: ";
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserResponse createUser(CreateUserRequest request) {
         if (userRepository.existsByEmail(request.email())) {
@@ -30,7 +32,7 @@ public class UserService {
         user.setName(request.name());
         user.setEmail(request.email());
         user.setPhone(request.phone());
-        user.setPassword(request.password());
+        user.setPassword(passwordEncoder.encode(request.password()));
         user.setActive(true);
 
         User saved = userRepository.save(user);
@@ -56,7 +58,11 @@ public class UserService {
         user.setName(request.name());
         user.setEmail(request.email());
         user.setPhone(request.phone());
-        user.setPassword(request.password());
+
+        if (request.password() != null && !request.password().isBlank()) {
+            user.setPassword(passwordEncoder.encode(request.password()));
+        }
+
         user.setActive(true);
 
         User updated = userRepository.save(user);
