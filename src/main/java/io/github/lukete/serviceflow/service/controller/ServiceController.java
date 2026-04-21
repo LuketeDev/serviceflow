@@ -19,6 +19,7 @@ import java.util.UUID;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping(path = "/api/services")
@@ -31,8 +32,14 @@ public class ServiceController {
         return serviceService.createService(request);
     }
 
-    @GetMapping()
-    public List<ServiceResponse> getAll() {
+    @GetMapping
+    public List<ServiceResponse> getAll(
+            @RequestParam(required = false) UUID userId) {
+
+        if (userId != null) {
+            return serviceService.findByUserId(userId);
+        }
+
         return serviceService.findAll();
     }
 

@@ -2,8 +2,12 @@ package io.github.lukete.serviceflow.service.domain.entity;
 
 import java.math.BigDecimal;
 import io.github.lukete.serviceflow.common.BaseEntity;
+import io.github.lukete.serviceflow.user.domain.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.RequiredArgsConstructor;
 
@@ -31,4 +35,8 @@ public class ServiceEntity extends BaseEntity {
 
     @Column(nullable = false)
     private boolean active;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }
