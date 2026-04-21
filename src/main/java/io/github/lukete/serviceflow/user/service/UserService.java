@@ -1,6 +1,5 @@
 package io.github.lukete.serviceflow.user.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,9 +33,6 @@ public class UserService {
         user.setPassword(request.password());
         user.setActive(true);
 
-        user.setCreatedAt(LocalDateTime.now());
-        user.setUpdatedAt(LocalDateTime.now());
-
         User saved = userRepository.save(user);
         return toResponse(saved);
     }
@@ -63,8 +59,6 @@ public class UserService {
         user.setPassword(request.password());
         user.setActive(true);
 
-        user.setUpdatedAt(LocalDateTime.now());
-
         User updated = userRepository.save(user);
         return toResponse(updated);
     }
@@ -74,7 +68,6 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + id));
 
         user.setActive(false);
-        user.setUpdatedAt(LocalDateTime.now());
 
         User updated = userRepository.save(user);
         return toResponse(updated);

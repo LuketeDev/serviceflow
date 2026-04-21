@@ -1,6 +1,5 @@
 package io.github.lukete.serviceflow.service.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +20,7 @@ public class ServiceService {
     private final ServiceRepository serviceRepository;
 
     public ServiceResponse createService(CreateServiceRequest request) {
-        // TODO add non-duplication
+        // TO-DO add non-duplication
 
         ServiceEntity service = new ServiceEntity();
         service.setName(request.name());
@@ -29,8 +28,6 @@ public class ServiceService {
         service.setDurationInMinutes(request.durationInMinutes());
         service.setPrice(request.price());
         service.setActive(true);
-        service.setCreatedAt(LocalDateTime.now());
-        service.setUpdatedAt(LocalDateTime.now());
 
         ServiceEntity saved = serviceRepository.save(service);
         return toResponse(saved);
@@ -56,7 +53,6 @@ public class ServiceService {
         service.setDescription(request.description());
         service.setDurationInMinutes(request.durationInMinutes());
         service.setPrice(request.price());
-        service.setUpdatedAt(LocalDateTime.now());
 
         ServiceEntity updated = serviceRepository.save(service);
         return toResponse(updated);
@@ -67,7 +63,6 @@ public class ServiceService {
                 .orElseThrow(() -> new ResourceNotFoundException(NOT_FOUND + id));
 
         service.setActive(false);
-        service.setUpdatedAt(LocalDateTime.now());
 
         ServiceEntity updated = serviceRepository.save(service);
         return toResponse(updated);

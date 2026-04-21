@@ -1,14 +1,9 @@
 package io.github.lukete.serviceflow.service.domain.entity;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.UUID;
-
+import io.github.lukete.serviceflow.common.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.RequiredArgsConstructor;
 
@@ -20,10 +15,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "services")
 @RequiredArgsConstructor
-public class ServiceEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+public class ServiceEntity extends BaseEntity {
 
     @Column(nullable = false, length = 120)
     private String name;
@@ -39,10 +31,4 @@ public class ServiceEntity {
 
     @Column(nullable = false)
     private boolean active;
-
-    @Column
-    private LocalDateTime createdAt;
-
-    @Column
-    private LocalDateTime updatedAt;
 }
