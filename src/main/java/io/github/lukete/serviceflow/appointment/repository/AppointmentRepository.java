@@ -20,7 +20,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
 
   @Query("""
           select count(a) > 0
-          from AppointmentEntity a
+          from Appointment a
           where a.user.id = :userId
             and a.appointmentDate = :appointmentDate
             and a.status = 'SCHEDULED'
