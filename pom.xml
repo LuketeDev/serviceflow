@@ -76,6 +76,21 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 			<version>4.1.0-M4</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-flyway</artifactId>
+			<version>4.1.0-M4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<version>4.1.0-M3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-security-test</artifactId>
+			<version>4.1.0-M4</version>
+		</dependency>
 	</dependencies>
 
 	<build>
