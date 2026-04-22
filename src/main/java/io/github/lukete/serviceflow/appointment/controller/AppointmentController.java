@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,8 +28,9 @@ public class AppointmentController {
     private final AppointmentService appointmentService;
 
     @PostMapping()
-    public AppointmentResponse createAppointment(@Valid @RequestBody CreateAppointmentRequest request) {
-        return appointmentService.createAppointment(request);
+    public ResponseEntity<AppointmentResponse> createAppointment(@Valid @RequestBody CreateAppointmentRequest request) {
+        AppointmentResponse response = appointmentService.createAppointment(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping
