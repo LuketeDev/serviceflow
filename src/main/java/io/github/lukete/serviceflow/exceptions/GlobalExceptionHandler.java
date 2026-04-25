@@ -51,6 +51,18 @@ public class GlobalExceptionHandler {
                 return ResponseEntity.badRequest().body(error);
         }
 
+        @ExceptionHandler(InvalidStatusTransitionException.class)
+        public ResponseEntity<ApiError> handleInvalidStatusTransition(
+                        InvalidStatusTransitionException exception,
+                        HttpServletRequest request) {
+                ApiError error = new ApiError(
+                                LocalDateTime.now(),
+                                HttpStatus.BAD_REQUEST.value(),
+                                exception.getMessage(),
+                                request.getRequestURI());
+                return ResponseEntity.badRequest().body(error);
+        }
+
         @ExceptionHandler(ScheduleConflictException.class)
         public ResponseEntity<ApiError> handleScheduleConflict(
                         ScheduleConflictException exception,

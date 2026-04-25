@@ -1,10 +1,10 @@
 package io.github.lukete.serviceflow;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class ServiceflowApplicationTests {
+import io.github.lukete.serviceflow.integration.IntegrationTestBase;
+
+class ServiceflowApplicationTests extends IntegrationTestBase {
 
 	@Test
 	void contextLoads() {

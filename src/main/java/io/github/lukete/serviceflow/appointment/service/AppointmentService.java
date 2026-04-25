@@ -11,6 +11,7 @@ import io.github.lukete.serviceflow.appointment.domain.entity.Appointment;
 import io.github.lukete.serviceflow.appointment.domain.enums.AppointmentStatus;
 import io.github.lukete.serviceflow.appointment.dto.AppointmentResponse;
 import io.github.lukete.serviceflow.appointment.dto.CreateAppointmentRequest;
+import io.github.lukete.serviceflow.exceptions.InvalidStatusTransitionException;
 import io.github.lukete.serviceflow.appointment.repository.AppointmentRepository;
 import io.github.lukete.serviceflow.exceptions.ResourceDoesNotBelongException;
 import io.github.lukete.serviceflow.exceptions.ResourceNotFoundException;
@@ -99,6 +100,8 @@ public class AppointmentService {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(APPOINTMENT_NOT_FOUND + id));
 
+        ensureScheduled(appointment, AppointmentStatus.CANCELLED);
+
         appointment.setStatus(AppointmentStatus.CANCELLED);
 
         Appointment saved = appointmentRepository.save(appointment);
@@ -109,10 +112,19 @@ public class AppointmentService {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(APPOINTMENT_NOT_FOUND + id));
 
+        ensureScheduled(appointment, AppointmentStatus.COMPLETED);
+
         appointment.setStatus(AppointmentStatus.COMPLETED);
 
         Appointment saved = appointmentRepository.save(appointment);
         return toResponse(saved);
+    }
+
+    private void ensureScheduled(Appointment appointment, AppointmentStatus targetStatus) {
+        if (appointment.getStatus() != AppointmentStatus.SCHEDULED) {
+            throw new InvalidStatusTransitionException(
+                    "Cannot change appointment status from " + appointment.getStatus() + " to " + targetStatus);
+        }
     }
 
     private AppointmentResponse toResponse(Appointment saved) {

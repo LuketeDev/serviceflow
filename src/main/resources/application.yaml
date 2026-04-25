@@ -1,3 +1,6 @@
 spring:
   application:
     name: serviceflow
+  flyway:
+    locations:
+      - classpath:db/migrations
