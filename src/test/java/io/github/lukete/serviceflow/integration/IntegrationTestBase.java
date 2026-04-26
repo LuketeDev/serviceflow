@@ -8,8 +8,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.containers.PostgreSQLContainer;
-
+import org.testcontainers.postgresql.PostgreSQLContainer;
 import io.github.lukete.serviceflow.appointment.repository.AppointmentRepository;
 import io.github.lukete.serviceflow.service.repository.ServiceRepository;
 import io.github.lukete.serviceflow.user.repository.UserRepository;
@@ -18,7 +17,7 @@ import io.github.lukete.serviceflow.user.repository.UserRepository;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 public abstract class IntegrationTestBase {
-    static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:16-alpine")
+    static final PostgreSQLContainer POSTGRES = new PostgreSQLContainer("postgres:16-alpine")
             .withDatabaseName("serviceflow_it")
             .withUsername("serviceflow")
             .withPassword("serviceflow");
