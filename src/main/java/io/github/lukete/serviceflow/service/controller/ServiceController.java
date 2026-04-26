@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,8 +30,9 @@ public class ServiceController {
     private final ServiceService serviceService;
 
     @PostMapping()
-    public ServiceResponse createService(@Valid @RequestBody CreateServiceRequest request) {
-        return serviceService.createService(request);
+    public ResponseEntity<ServiceResponse> createService(@Valid @RequestBody CreateServiceRequest request) {
+        ServiceResponse response = serviceService.createService(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping
