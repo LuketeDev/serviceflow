@@ -75,6 +75,19 @@ public class GlobalExceptionHandler {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
         }
 
+        @ExceptionHandler(InvalidCredentialsException.class)
+        public ResponseEntity<ApiError> handleInvalidCredentials(
+                        InvalidCredentialsException exception,
+                        HttpServletRequest request) {
+                ApiError error = new ApiError(
+                                LocalDateTime.now(),
+                                HttpStatus.UNAUTHORIZED.value(),
+                                exception.getMessage(),
+                                request.getRequestURI());
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+        }
+
+        // extras
         @ExceptionHandler(MethodArgumentNotValidException.class)
         public ResponseEntity<ValidationErrorResponse> handleMethodArgumentNotValid(
                         MethodArgumentNotValidException exception,
